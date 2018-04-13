@@ -3,6 +3,7 @@
 // With ths sketch you can set frequency reaf PLL/freq, seek frequency/
 // The skecth uses and I2C LCd module (AzDelivery I2C LCd module) and the LiquidCrystal_I2C library
 // Riccardo G Corsi 13.04.2018
+// https://github.com/diamond2016/TEA5767sk
 
 #include <LCD.h>
 #include <LiquidCrystal_I2C.h>
