@@ -12,3 +12,5 @@ LCd module used is compatible with Liquidcrystal_I2C (I have used AzDelivery LCD
 One sketch is simpler, the other adds analog seek of frequency and keypad management
 Riccardo. G. Corsi
 apr 2018
+
+You can see some photos on ProjectHub of Arduino (New TEA5676 sketches to make anFM radio with Arduino )
