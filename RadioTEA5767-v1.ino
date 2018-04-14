@@ -77,7 +77,7 @@ void setup()
 void loop()
 {
   read_registers();
-  //setFreq();
+  //setFreq(); // comment out to manage
   keypadMenu();
   delay(500);
 }
