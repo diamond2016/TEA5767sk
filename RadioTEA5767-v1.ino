@@ -8,7 +8,7 @@
 
 const byte ROWS = 4; //four rows
 const byte COLS = 4; //three columns
-
+const byte CHANS = 4; // channels stored
 char keys[ROWS][COLS] = {
   {'1','2','3','A'},
   {'4','5','6','B'},
@@ -17,11 +17,15 @@ char keys[ROWS][COLS] = {
 };
 byte rowPins[ROWS] = {5, 4, 3, 2}; //connect to the row pinouts of the keypad
 byte colPins[COLS] = {9, 8, 7, 6}; //connect to the column pinouts of the keypad
-float chans[COLS] = { 88.6, // RadioMaria
-                      94.9, // RadioUNO
-                      89.5, // Radio24
-                      90.7  // RadioFreccia
+float chans[CHANS] = { 88.6, // RadioMaria
+                      94.86, // RadioUNO
+                      97.2, // Radio 2
+                      90.7, // RadioFreccia
 };
+
+const byte FREQ_DIGITS = 5;
+byte FREQUENCY[FREQ_DIGITS];
+int freq_pos = 0;
 
 
 #include <LCD.h>
@@ -32,6 +36,7 @@ float chans[COLS] = { 88.6, // RadioMaria
 #define FREQ_LOW 87
 #define FREQ_HIGH 108
 char buf[14]; 
+float curr_freq = 0;
 
 // A1 is freq analog input used 1K resistor + potientometer
 #define PIN_IN_FREQ A1
@@ -77,7 +82,7 @@ void setup()
 void loop()
 {
   read_registers();
-  //setFreq(); // comment out to manage
+  //setFreq();
   keypadMenu();
   delay(500);
 }
@@ -213,9 +218,16 @@ void setFreq() {
   }
 }
 
+
+// read from keypad
+// A,B,C,D are the four channels preconfigured
+// * seeks
+// 99999# (min 3 digits max 5 digits plus # sets the frequency e.g. 10325# = 103.25Mhz
+
 void keypadMenu() {
   char key = 0;
-
+  float frq = 0;
+  
   key = keypad.getKey();
   if (key == NO_KEY)
     return;
@@ -234,16 +246,89 @@ void keypadMenu() {
       break;
     case 'D':
       setPLL(chans[3]);
-      break;
+      break;           
     case '*':
-      seekDown();
+      seekUp();
+      break;
+    case '0':
+      keypadFreq(0);
+      break;
+    case '1':
+      keypadFreq(1);
+      break;
+    case '2':
+      keypadFreq(2);
+      break;
+    case '3':
+      keypadFreq(3);
+      break;
+    case '4':
+      keypadFreq(4);
+      break;
+    case '5':
+      keypadFreq(5);
+      break;
+    case '6':
+      keypadFreq(6);
+      break;
+    case '7':
+      keypadFreq(7);
+      break;
+    case '8':
+      keypadFreq(8);
+      break;
+    case '9':
+      keypadFreq(9);
       break;
     case '#':
-      seekUp();
-      break;    
+      setPLL(curr_freq);
+      curr_freq = 0;
+      freq_pos = 0;
+      break;                              
     default:
       break;
   }
+}
+
+void keypadFreq(byte val) {
+  char key = 0;
+  
+  // read a fix format ABCDE#
+  // A = frequency hundredths MHz
+  // eg 10325 A=1 B=0 C=3 D=2 E=5
+  // use 0 to complete 
+
+  switch (freq_pos) {
+    // A
+    case 0:
+      curr_freq = 100 * val ;
+      freq_pos++;
+      break;
+   // B
+   case 1:
+      curr_freq += 10 * val;
+      freq_pos++;
+      break;
+  // C
+  case 2:
+      curr_freq += val;
+      freq_pos++;
+      break;
+// D
+  case 3:
+      curr_freq += 0.1 * val;
+      freq_pos++;
+      break;
+// E
+  case 4:
+      curr_freq += 0.01 * val;
+      freq_pos++;
+      break;
+
+      default:
+      break;
+  }
+ 
 }
 
 
