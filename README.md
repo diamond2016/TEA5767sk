@@ -10,6 +10,7 @@ With this sketch you can manage the TEA5767 FM on chip module:
 LCd module used is compatible with Liquidcrystal_I2C (I have used AzDelivery LCD I2C)
 
 Release 01.00 contains simple sketches in C.
+
 Riccardo. G. Corsi
 apr 2018
 
