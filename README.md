@@ -1,5 +1,5 @@
 # TEA5767sk
-This is repository contains two an Arduino sketches to manage the TEA5767 FM radio on chip with Arduino on I2C
+This is repository containing a library to manage the TEA5767 FM radio on chip with Arduino on I2C
 With this sketch you can manage the TEA5767 FM on chip module:
 - set FM frequency
 - read and write internal registers
@@ -9,7 +9,7 @@ With this sketch you can manage the TEA5767 FM on chip module:
 
 LCd module used is compatible with Liquidcrystal_I2C (I have used AzDelivery LCD I2C)
 
-One sketch is simpler, the other adds analog seek of frequency and keypad management
+Release 01.00 contains simple sketches in C.
 Riccardo. G. Corsi
 apr 2018
 
